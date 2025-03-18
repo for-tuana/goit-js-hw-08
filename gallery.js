@@ -130,6 +130,7 @@ const images = [
 createGalleryMarkup(images); 
 const gallery = document.querySelector(".gallery");
 console.log(gallery)
+let currentInstance = null;
 
 function displayLargeImage(event) {
     if (event.target.nodeName !== "IMG") {
@@ -138,13 +139,22 @@ function displayLargeImage(event) {
 
     const selectedLargeImageUrl = event.target.dataset.source;
     console.log(selectedLargeImageUrl);
-    
-    const largeImageContainer = document.createElement("div");
-    largeImageContainer.classList.add("large-image-container");
-    largeImageContainer.innerHTML = `<img src="${selectedLargeImageUrl}" alt="Selected Image" style="max-width: 100%; height: auto; margin-top: 20px;">`;
-    document.body.append(largeImageContainer);
+
+    const instance = basicLightbox.create(`
+    <img src="${selectedLargeImageUrl}" width="800" height="600">
+`)
+
+    instance.show()
+    currentInstance = instance;
 }
 
 gallery.addEventListener("click", displayLargeImage);
 
+function onEscapeKey(event) {
+    if (event.code === "Escape" && currentInstance) {
+        currentInstance.close();
+    }
+}
+
+window.addEventListener("keydown", onEscapeKey);
 

@@ -23,10 +23,16 @@
 
 function createGalleryMarkup(images) {
     const gallery = document.querySelector(".gallery");
-
+    gallery.style.display = "flex";
+    gallery.style.flexWrap = "Wrap";
+    gallery.style.gap = "10px";
+    
     const markup = images.map(({ preview, original, description }) => {
         const li = document.createElement("li");
         li.classList.add("gallery-item");
+        li.style.listStyle = "none";
+        li.style.boxSizing = "border-box"
+        li.style.width = "calc(25.33% - 10px)";
 
         const a = document.createElement("a");
         a.classList.add("gallery-link");
@@ -37,6 +43,10 @@ function createGalleryMarkup(images) {
         img.src = preview;
         img.setAttribute("data-source", original);
         img.alt = description;
+        img.style.width = "360px";
+        img.style.length = "300px";
+        
+        
 
          a.addEventListener("click", (event) => {
             event.preventDefault(); 

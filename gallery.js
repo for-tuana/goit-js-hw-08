@@ -24,14 +24,14 @@
 function createGalleryMarkup(images) {
     const gallery = document.querySelector(".gallery");
     gallery.style.display = "flex";
-    gallery.style.flexWrap = "Wrap";
+    gallery.style.flexWrap = "wrap";
     gallery.style.gap = "10px";
     
     const markup = images.map(({ preview, original, description }) => {
         const li = document.createElement("li");
         li.classList.add("gallery-item");
         li.style.listStyle = "none";
-        li.style.boxSizing = "border-box"
+        li.style.boxSizing = "border-box";
         li.style.width = "calc(25.33% - 10px)";
 
         const a = document.createElement("a");
@@ -44,7 +44,7 @@ function createGalleryMarkup(images) {
         img.setAttribute("data-source", original);
         img.alt = description;
         img.style.width = "360px";
-        img.style.length = "300px";
+        img.style.height = "300px";
         
         
 
@@ -130,5 +130,21 @@ const images = [
 createGalleryMarkup(images); 
 const gallery = document.querySelector(".gallery");
 console.log(gallery)
+
+function displayLargeImage(event) {
+    if (event.target.nodeName !== "IMG") {
+        return;
+    }
+
+    const selectedLargeImageUrl = event.target.dataset.source;
+    console.log(selectedLargeImageUrl);
+    
+    const largeImageContainer = document.createElement("div");
+    largeImageContainer.classList.add("large-image-container");
+    largeImageContainer.innerHTML = `<img src="${selectedLargeImageUrl}" alt="Selected Image" style="max-width: 100%; height: auto; margin-top: 20px;">`;
+    document.body.append(largeImageContainer);
+}
+
+gallery.addEventListener("click", displayLargeImage);
 
 
